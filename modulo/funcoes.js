@@ -83,8 +83,9 @@ const getCapitalPais = function (){
             teste.uf = item.sigla
             teste.descricao = item.nome
             teste.capital = item.capital
-            teste.regiao = item.
-            teste.capital_pais_ano_inicio = 
+            teste.regiao = item.regiao
+            teste.capital_pais_ano_inicio = item.capital_pais.ano_inicio
+            teste.capital_pais_ano_termino = item.capital_pais.ano_fim
             capitais.push(teste)
         }
 
@@ -92,4 +93,21 @@ const getCapitalPais = function (){
     return paisCapitais
 }
 
-console.log(getCapitalPais())
+const getCidades = function (regiaoEstado){
+    let filtroRegiao = {}
+    let regiao = String(regiaoEstado).toUpperCase()
+    let listaCidade = []
+
+    funcoes.listaDeEstados.estados.forEach(function(item){
+        if(String(item.regiao).toUpperCase() == regiao){
+            listaCidade.push(filtroRegiao)
+            filtroRegiao.uf =
+            filtroRegiao.descricao = item.nome
+            listaCidade.quantidade_cidades = listaCidade.length
+            listaCidade.cidades = item.nome
+        }
+    })
+    return 
+}
+
+console.log(getCidades('sp'))
