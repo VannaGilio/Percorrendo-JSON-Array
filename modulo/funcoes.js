@@ -95,19 +95,20 @@ const getCapitalPais = function (){
 
 const getCidades = function (regiaoEstado){
     let filtroRegiao = {}
-    let regiao = String(regiaoEstado).toUpperCase()
     let listaCidade = []
+    let siglaRegiao = String(regiaoEstado).toUpperCase()
 
     funcoes.listaDeEstados.estados.forEach(function(item){
-        if(String(item.regiao).toUpperCase() == regiao){
-            listaCidade.push(filtroRegiao)
-            filtroRegiao.uf =
+        if(String(item.sigla).toUpperCase() == siglaRegiao){
+            filtroRegiao.uf = item.sigla
             filtroRegiao.descricao = item.nome
-            listaCidade.quantidade_cidades = listaCidade.length
-            listaCidade.cidades = item.nome
+            filtroRegiao.quantidade_cidades = item.cidades.length
+            listaCidade = item.cidades
+            filtroRegiao.cidades = listaCidade
         }
     })
-    return 
+    
+    return filtroRegiao
 }
 
-console.log(getCidades('sp'))
+console.log(getCidades('ac'))
