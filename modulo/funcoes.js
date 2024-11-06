@@ -113,7 +113,7 @@ const getCidades = function (regiaoEstado) {
         return filtroRegiao
 }
 
-console.log(getCidades('sp'))
+// console.log(getCidades('sp'))
 
 module.exports = {
     getListaDeEstados, 

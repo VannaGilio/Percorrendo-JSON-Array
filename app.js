@@ -38,20 +38,27 @@ app.use((request, response, next) =>{
 
     //Aplica as restrições no CORS da requisição
     app.use(cors())
+
+    next()
 })
 
-//EndPoint                                           
+//EndPoint para retornar todos os estados                                     
 app.get('/v1/estados-cidades/lista-siglas-estados', cors(), async function(request, response){ // cors() -> Permissões estão no CORS, como se eu 'chamasse' uma variavel
     
     //import do arquivo de funções
     let estadosCidades = require('./modulo/funcoes')
 
+    //Chama função que retorna todos os estados
     let siglaEstados = estadosCidades.getListaDeEstados()
-    response.json(siglaEstados)
+
+    //Resposta da API com o JSON e o status code
     response.status(200)
+    response.json(siglaEstados)
+    
 })
 
-app.listen('3030', function(){
+//Configurar portas, executa API e faz com que fique aguardando novas requisições
+app.listen('8080', function(){
     console.log('API funcionando e aguardando requisições ...')
 })
 
