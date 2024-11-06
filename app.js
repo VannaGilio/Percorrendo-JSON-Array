@@ -43,11 +43,11 @@ app.use((request, response, next) =>{
     next()
 })
 
+//import do arquivo de funções
+const estadosCidades = require('./modulo/funcoes')
+
 //EndPoint para retornar todos os estados                                     
 app.get('/v1/estados-cidades/lista-siglas-estados', cors(), async function(request, response){ // cors() -> Permissões estão no CORS, como se eu 'chamasse' uma variavel
-    
-    //import do arquivo de funções
-    let estadosCidades = require('./modulo/funcoes')
 
     //Chama função que retorna todos os estados
     let siglaEstados = estadosCidades.getListaDeEstados()
@@ -56,6 +56,18 @@ app.get('/v1/estados-cidades/lista-siglas-estados', cors(), async function(reque
     response.status(200)
     response.json(siglaEstados)
     
+})
+
+//EndPoint que retorna os dados filtrando pela sigla
+app.get('/v1/estados-cidades/estado/:sigla', cors(), async function(request, response){
+    //Recebe o conteudo da variavel sigla que será enviada na URL da requisição
+    let uf = request.params.sigla
+
+    //Chama a função que vai receber a sigla e retornar os dados referente ao estado
+    let dados = estadosCidades.getDadosEstado(uf)
+
+    response.status(200)
+    response.json(dados)
 })
 
 //Configurar portas, executa API e faz com que fique aguardando novas requisições
