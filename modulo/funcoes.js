@@ -22,19 +22,26 @@ const getListaDeEstados = function(){
 
 
 const getDadosEstado = function(siglaEstado){
+    let status = false
     let filtroEstado = {}
     let sigla = String(siglaEstado).toUpperCase()
 
     funcoes.listaDeEstados.estados.forEach(function(item){
         if(String(item.sigla).toUpperCase() == sigla){
+            status = true
             filtroEstado.uf = item.sigla
             filtroEstado.descricao = item.nome
             filtroEstado.capital = item.capital
             filtroEstado.regiao = item.regiao
         }
     })
-    return filtroEstado
+    if(status == true){
+        return filtroEstado
+    }else{
+        return status
+    }
 }
+
 
 const getCapitalEstado = function(siglaEstado){
     let filtroEstado = {}
@@ -49,6 +56,7 @@ const getCapitalEstado = function(siglaEstado){
     })
     return filtroEstado
 }
+
 
 const getEstadoRegiao = function(regiaoEstado){
     let filtroRegiao = {}

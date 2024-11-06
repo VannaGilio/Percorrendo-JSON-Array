@@ -47,7 +47,7 @@ app.use((request, response, next) =>{
 const estadosCidades = require('./modulo/funcoes')
 
 //EndPoint para retornar todos os estados                                     
-app.get('/v1/estados-cidades/lista-siglas-estados', cors(), async function(request, response){ // cors() -> Permissões estão no CORS, como se eu 'chamasse' uma variavel
+app.get('/v1/estado-cidades/lista-siglas-estados', cors(), async function(request, response){ // cors() -> Permissões estão no CORS, como se eu 'chamasse' uma variavel
 
     //Chama função que retorna todos os estados
     let siglaEstados = estadosCidades.getListaDeEstados()
@@ -59,15 +59,57 @@ app.get('/v1/estados-cidades/lista-siglas-estados', cors(), async function(reque
 })
 
 //EndPoint que retorna os dados filtrando pela sigla
-app.get('/v1/estados-cidades/estado/:sigla', cors(), async function(request, response){
+app.get('/v1/estado-cidades/estado/:sigla', cors(), async function(request, response){
     //Recebe o conteudo da variavel sigla que será enviada na URL da requisição
     let uf = request.params.sigla
 
     //Chama a função que vai receber a sigla e retornar os dados referente ao estado
     let dados = estadosCidades.getDadosEstado(uf)
 
-    response.status(200)
-    response.json(dados)
+    if(dados){
+        response.status(200)
+        response.json(dados)
+    }else{
+        response.status(404)
+        response.json({'status': 404, 'message': 'Não foi encontrado um estado'})
+    }
+})
+
+app.get('/v1/estado-cidades/capital/:sigla', cors(), async function(request, response){
+    let uf = request.params.sigla
+    let dados = estadosCidades.getCapitalEstado(uf)
+
+    if(dados){
+        response.status(200)
+        response.json(dados)
+    }else{
+        response.status(404)
+        response.json({'status': 404, 'message': 'Não foi encontrado um estado'})
+    }
+})
+
+app.get('/v1/estado-cidades/regiao/:regiao', cors(), async function(request, response){
+    let regiao = request.params.regiao
+    let dados = estadosCidades.getEstadoRegiao(regiao)
+    if(dados){
+        response.status(200)
+        response.json(dados)
+    }else{
+        response.status(404)
+        response.json({'status': 404, 'message': 'Não foi encontrado um estado'})
+    }
+})
+
+app.get('/v1/estado-cidade/capital-pais/:capitais', cors(), async function(request,response){
+    let capitais = request.params.capitais
+    let dados = estadosCidades.getCapitalPais(capitais)
+    if(dados){
+        response.status(200)
+        response.json(dados)
+    }else{
+        response.status(404)
+        response.json({'status': 404, 'message': 'Não foi encontrado um estado'})
+    }
 })
 
 //Configurar portas, executa API e faz com que fique aguardando novas requisições
