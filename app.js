@@ -3,6 +3,7 @@
  * Data: 30/10/2024
  * Autor: Giovanna
  * Versão: 1.0
+ * //http://localhost:8080/v1/estados-cidades/lista-siglas-estados
 ***********************************************************************/
 
 /*
@@ -62,4 +63,3 @@ app.listen('8080', function(){
     console.log('API funcionando e aguardando requisições ...')
 })
 
-//http://localhost:8080/v1/estados-cidades/lista-siglas-estados
