@@ -8,17 +8,25 @@
 var funcoes = require('./estados_cidades')
 
 const getListaDeEstados = function(){
+    let status = false
     let sigla = {}
     let listaSigla = []
 
     funcoes.listaDeEstados.estados.forEach(function(item){
+        status = true
         listaSigla.push(item.sigla)
     })
     sigla.uf = listaSigla
     sigla.quantidade = listaSigla.length
 
-    return sigla
+    if(status == true){
+        return sigla
+    }else{
+        return status
+    }
 }
+
+// console.log(getListaDeEstados())
 
 
 const getDadosEstado = function(siglaEstado){
@@ -42,23 +50,32 @@ const getDadosEstado = function(siglaEstado){
     }
 }
 
+// console.log(getDadosEstado('sp'))
 
 const getCapitalEstado = function(siglaEstado){
+    let status = false
     let filtroEstado = {}
     let sigla = String(siglaEstado).toUpperCase()
 
     funcoes.listaDeEstados.estados.forEach(function(item){
         if(String(item.sigla).toUpperCase() == sigla){
+            status = true
             filtroEstado.uf = item.sigla
             filtroEstado.descricao = item.nome
             filtroEstado.capital = item.capital
         }
     })
-    return filtroEstado
+    if(status == true){
+        return filtroEstado
+    }else{
+        return status
+    }
 }
 
+// console.log(getCapitalEstado('rj'))
 
 const getEstadoRegiao = function(regiaoEstado){
+    let status = false
     let filtroRegiao = {}
     let regiao = String(regiaoEstado).toUpperCase()
     let sigla = []
@@ -66,6 +83,7 @@ const getEstadoRegiao = function(regiaoEstado){
 
     funcoes.listaDeEstados.estados.forEach(function(item){
         if(String(item.regiao).toUpperCase() == regiao){
+            status = true
             let estado = {}
             filtroRegiao.regiao = item.regiao
             filtroRegiao.estados = sigla
@@ -76,16 +94,24 @@ const getEstadoRegiao = function(regiaoEstado){
         }
 
     })
-    return filtroRegiao
+    if(status == true){
+        return filtroRegiao
+    }else{
+        return status
+    }
 }
 
+// console.log(getEstadoRegiao('sul'))
+
 const getCapitalPais = function (){
+    let status = false
     let paisCapitais = {}
     let capitais = []
     paisCapitais.capitais = capitais
 
     funcoes.listaDeEstados.estados.forEach(function(item){
         if (item.capital_pais != undefined){
+            status = true
             let teste = {}
             teste.capital_atual = item.capital_pais.capital
             teste.uf = item.sigla
@@ -98,16 +124,24 @@ const getCapitalPais = function (){
         }
 
     })
-    return paisCapitais
+    if(status == true){
+        return paisCapitais
+    }else{
+        return status
+    }
 }
 
+// console.log(getCapitalPais())
+
 const getCidades = function (regiaoEstado) {
+    let status = false
     let filtroRegiao = {}
     let listaCidades = []
     let siglaRegiao = String(regiaoEstado).toUpperCase()
 
     funcoes.listaDeEstados.estados.forEach(function(item) {
         if (String(item.sigla).toUpperCase() === siglaRegiao) {
+            status = true
             filtroRegiao.uf = item.sigla
             filtroRegiao.descricao = item.nome
             filtroRegiao.quantidade_cidades = item.cidades.length
@@ -118,7 +152,11 @@ const getCidades = function (regiaoEstado) {
             })
         }
     })
+    if(status == true){
         return filtroRegiao
+    }else{
+        return status
+    }
 }
 
 // console.log(getCidades('sp'))

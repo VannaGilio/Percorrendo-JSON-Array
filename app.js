@@ -53,14 +53,18 @@ app.get('/v1/estado-cidades/lista-siglas-estados', cors(), async function(reques
     let siglaEstados = estadosCidades.getListaDeEstados()
 
     //Resposta da API com o JSON e o status code
-    response.status(200)
-    response.json(siglaEstados)
-    
+    if(siglaEstados){
+        response.status(200)
+        response.json(siglaEstados)
+    }else{
+        response.status(404)
+        response.json({'status': 404, 'message': 'Não foi encontrado um estado'})
+    }
 })
 
 //EndPoint que retorna os dados filtrando pela sigla
 app.get('/v1/estado-cidades/estado/:sigla', cors(), async function(request, response){
-    //Recebe o conteudo da variavel sigla que será enviada na URL da requisição
+    //Recebe o conteudo da variavel sigla que será enviada na URL da requisição pelo modelo de parametro (params)
     let uf = request.params.sigla
 
     //Chama a função que vai receber a sigla e retornar os dados referente ao estado
@@ -75,10 +79,13 @@ app.get('/v1/estado-cidades/estado/:sigla', cors(), async function(request, resp
     }
 })
 
-app.get('/v1/estado-cidades/capital/:sigla', cors(), async function(request, response){
-    let uf = request.params.sigla
+//EndPoint que retorna a capital do estado filtrando pela sigla
+app.get('/v1/estado-cidades/capital/estado', cors(), async function(request, response){
+    //recebe a variavel sigla através do modelo query string -> quando precisarmos de mais requisições
+    let uf = request.query.sigla
     let dados = estadosCidades.getCapitalEstado(uf)
 
+    console.log(uf)
     if(dados){
         response.status(200)
         response.json(dados)
@@ -88,8 +95,8 @@ app.get('/v1/estado-cidades/capital/:sigla', cors(), async function(request, res
     }
 })
 
-app.get('/v1/estado-cidades/regiao/:regiao', cors(), async function(request, response){
-    let regiao = request.params.regiao
+app.get('/v1/estado-cidades/regiao/regiao', cors(), async function(request, response){
+    let regiao = request.query.regiao
     let dados = estadosCidades.getEstadoRegiao(regiao)
     if(dados){
         response.status(200)
@@ -100,7 +107,7 @@ app.get('/v1/estado-cidades/regiao/:regiao', cors(), async function(request, res
     }
 })
 
-app.get('/v1/estado-cidade/capital-pais/:capitais', cors(), async function(request,response){
+app.get('/v1/estado-cidade/capital-pais/capitais', cors(), async function(request,response){
     let capitais = request.params.capitais
     let dados = estadosCidades.getCapitalPais(capitais)
     if(dados){
